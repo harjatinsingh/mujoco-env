@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<mujoco>
+	 <compiler inertiafromgeom='auto' coordinate="global" />
+
+	<worldbody>
+     	<light diffuse=".5 .5 .5" pos="0 0 3" dir="0 0 -1"/>  
+      	<camera name="camera1" pos="0 0 0.25" />
+      	<geom type="plane" size="0.5 0.5 0.1" rgba=".9 0 0 1"/>	
+      	<!--<geom type="plane" size="0.05 0.05 0.01" pos="0.3 0.3 0.001" rgba="0 0.9 0 1"/>-->
+      	<body pos="0 0 0">
+         	<joint axis="1 0 0" damping="0.1" name="slide0" pos="0 0 0" type="slide"/>
+            <joint axis="0 1 0" damping="0.1" name="slide1" pos="0 0 0" type="slide"/>
+            
+        	 <geom type="box" size=".05 .05 .001" rgba="0 .9 0 1"/>
+        </body>
+      	<body name="robot" pos="0 0 0">
+            <joint axis="1 0 0" damping="0.1" name="slide2" pos="0 0 0" type="slide"/>
+            <joint axis="0 1 0" damping="0.1" name="slide3" pos="0 0 0" type="slide"/>
+            <joint axis="0 0 1" damping="1" name="slide4" pos="0 0 0" type="slide"/>
+            <geom mass="1.0" pos="0 0 0" rgba="0 0 1 1" size="0.05" type="sphere"/>
+			<!--<camera euler="0 0 0" fovy="40" name="rgb" pos="0 0 2.5"></camera>-->
+        </body>
+   </worldbody>
+
+    <actuator>
+        <motor gear="2000.0" joint="slide2"/>
+        <motor gear="2000.0" joint="slide3"/>
+    </actuator>
+
+</mujoco>

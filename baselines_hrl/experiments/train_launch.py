@@ -13,7 +13,7 @@ if __name__ == '__main__':
         exp_prefix = 'square2d'
         vg = VariantGenerator()
         # vg.add('env_name', ['FetchPush-v0', 'FetchReach-v0'])
-        vg.add('env_name', ['Square2d-v0'])
+        vg.add('env_name', ['Square2dVisual-v0'])
         # vg.add('env_name', ['FetchReach-v0', 'FetchSlide-v0', 'FetchPush-v0'])
         vg.add('network', ['fc'])
         vg.add('n_epochs', [50])
@@ -41,7 +41,7 @@ if __name__ == '__main__':
     # 'the HER replay strategy to be used. "future" uses HER, "none" disables HER.'
     vg.add('clip_return', [1])
     # 'whether or not returns should be clipped'
-    vg.add('num_cpu', [1])
+    vg.add('num_cpu', [4])
     vg.add('policy_save_interval', [5])
     vg.add('save_policies', [True])
     if Debug:

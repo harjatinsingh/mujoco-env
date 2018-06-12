@@ -58,7 +58,7 @@ class RolloutWorker:
         obs = self.envs[i].reset()
         self.initial_o[i] = obs['observation'].flatten()
         self.initial_ag[i] = obs['achieved_goal'].flatten()
-        self.g[i] = obs['desired_goal']
+        self.g[i] = obs['desired_goal'].flatten()
 
     def reset_all_rollouts(self):
         """Resets all `rollout_batch_size` rollout workers.

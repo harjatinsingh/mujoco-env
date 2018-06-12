@@ -54,6 +54,8 @@ class CNNActorCritic:
         o = tf.reshape(o, [-1, *image_input_shapes['o']])
         g = tf.reshape(g, [-1, *image_input_shapes['g']])
 
+        #print(o.shape)
+        #input("--------------------")
         # input_pi = tf.concat(axis=1, values=[o, g])  # for actor
 
         # Networks.

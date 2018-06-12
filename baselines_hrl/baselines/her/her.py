@@ -71,6 +71,9 @@ def make_sample_her_transitions(replay_strategy, replay_k, reward_fun, replay_sa
             # print('her_indexes', her_indexes[:20])
             # exit()
 
+        #print(batch_size)
+        #print(transitions['r'].shape)
+        #input("--------------")    
         transitions = {k: transitions[k].reshape(batch_size, *transitions[k].shape[1:])
                        for k in transitions.keys()}
         # print('g', transitions['g'])

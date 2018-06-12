@@ -48,7 +48,7 @@ class Square2dVisualEnv(GoalEnv):
         goal_location = self._sample_goal()
         self.get_image_of_goal_observation(goal_location)
         data = self.render()
-        data = data[::-1, :, :].flatten()
+        #data = data[::-1, :, :].flatten()
         self.goal_observation = data
 
         self.set_ball_location([0., 0.])
@@ -111,13 +111,21 @@ class Square2dVisualEnv(GoalEnv):
     def get_current_observation(self):
         # obs = np.concatenate([self.get_goal_location(), self.get_ball_location(), self.get_ball_velocity()]).ravel()
         data = self.render()
-        data = data[::-1, :, :].flatten()
+        #data = data[::-1, :, :]
+        #data = data[::-1, :, :].flatten()
         #print(data[::-1, :, :].flatten().shape)
-        obs = np.concatenate([data, self.get_ball_velocity()]).ravel()
+        #obs = np.concatenate([data, self.get_ball_velocity()]).ravel()
+        #bs = data.flatten()
+        #desired_goal = self.goal_observation.flatten()
+        #achieved_goal = data.flatten()
+        obs = data.reval()
         desired_goal = self.goal_observation
         achieved_goal = data
         #print(achieved_goal.shape)
         #print(desired_goal.shape)
+        #print(obs.shape)
+        #input("--------------------")
+        
         return {
             'observation': obs.copy(),
             'achieved_goal': achieved_goal.copy(),
@@ -166,7 +174,7 @@ class Square2dVisualEnv(GoalEnv):
         #self._get_viewer().render() 
         #print(dir(self.sim))
         #image = self.get_image_of_goal_observation(self._sample_goal())
-        image = self.sim.render(camera_name='camera1', width=200, height=200, depth=False)
+        image = self.sim.render(camera_name='camera1', width=50, height=50, depth=False)
         image = image[::-1, :, :]
         return image
 

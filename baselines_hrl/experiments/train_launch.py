@@ -13,9 +13,9 @@ if __name__ == '__main__':
         exp_prefix = 'square2d'
         vg = VariantGenerator()
         # vg.add('env_name', ['FetchPush-v0', 'FetchReach-v0'])
-        vg.add('env_name', ['Square2d-v0'])
+        vg.add('env_name', ['Square2dVisual-v0'])
         # vg.add('env_name', ['FetchReach-v0', 'FetchSlide-v0', 'FetchPush-v0'])
-        vg.add('network', ['fc'])
+        vg.add('network', ['cnn_fc'])
         vg.add('n_epochs', [50])
 
         # vg.add('replay_strategy', ['future', 'only_fake'])

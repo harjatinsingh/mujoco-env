@@ -45,7 +45,7 @@ class Square2dVisualEnv(GoalEnv):
         return [seed]
 
     def reset(self):
-        goal_location = self._sample_goal()
+        goal_location = self._sample_goal().copy()
         self.get_image_of_goal_observation(goal_location)
         data = self.render()
         #data = data[::-1, :, :].flatten()
@@ -118,7 +118,7 @@ class Square2dVisualEnv(GoalEnv):
         #bs = data.flatten()
         #desired_goal = self.goal_observation.flatten()
         #achieved_goal = data.flatten()
-        obs = data.reval()
+        obs = data
         desired_goal = self.goal_observation
         achieved_goal = data
         #print(achieved_goal.shape)
@@ -158,7 +158,7 @@ class Square2dVisualEnv(GoalEnv):
         self.do_simulation(ctrl, self.frame_skip)
         obs = self.get_current_observation()
         info = {
-            'is_success': self._is_success(obs['achieved_goal'], obs['desired_goal']),
+            'is_success': self._is_success(obs['achieved_goal'], self.goal_observation),
         }
         reward = self.compute_reward(obs['achieved_goal'], obs['desired_goal'], {})
         done = (reward == 1.0)
@@ -174,7 +174,9 @@ class Square2dVisualEnv(GoalEnv):
         #self._get_viewer().render() 
         #print(dir(self.sim))
         #image = self.get_image_of_goal_observation(self._sample_goal())
-        image = self.sim.render(camera_name='camera1', width=50, height=50, depth=False)
+        image = self.sim.render(camera_name='camera1', width=100, height=100, depth=False)
+        #print(dir(self.sim.render))
+        #input("-------------")
         image = image[::-1, :, :]
         return image
 
@@ -187,7 +189,7 @@ class Square2dVisualEnv(GoalEnv):
             return -d
 
     def _is_success(self, achieved_goal, desired_goal):
-        d = np.linalg.norm(achieved_goal - desired_goal, axis=-1)
+        d = np.linalg.norm(achieved_goal.flatten() - desired_goal.flatten(), axis=-1)
         return (d < self.distance_threshold).astype(np.float32)
 
     def _sample_goal(self):

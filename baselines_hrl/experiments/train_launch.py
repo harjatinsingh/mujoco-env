@@ -15,7 +15,7 @@ if __name__ == '__main__':
         # vg.add('env_name', ['FetchPush-v0', 'FetchReach-v0'])
         vg.add('env_name', ['Square2dVisual-v0'])
         # vg.add('env_name', ['FetchReach-v0', 'FetchSlide-v0', 'FetchPush-v0'])
-        vg.add('network', ['cnn_fc'])
+        vg.add('network', ['fc'])
         vg.add('n_epochs', [50])
 
         # vg.add('replay_strategy', ['future', 'only_fake'])

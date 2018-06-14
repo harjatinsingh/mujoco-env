@@ -190,6 +190,7 @@ class Square2dVisualEnv(GoalEnv):
         # Compute distance between goal and the achieved goal.
         #print(achieved_goal.shape)
         #print(desired_goal.shape)
+        #input("------------------------")
         d = np.linalg.norm(achieved_goal - desired_goal, axis=-1)
         #return d
         #d = np.array([d])
@@ -200,6 +201,10 @@ class Square2dVisualEnv(GoalEnv):
             return -d
 
     def _is_success(self, achieved_goal, desired_goal):
+        #print(achieved_goal.shape)
+        #rint(desired_goal.shape)
+        #input("-------------------------")
+
         d = np.linalg.norm(achieved_goal.flatten() - desired_goal.flatten(), axis=-1)
         return (d < self.distance_threshold).astype(np.float32)
 

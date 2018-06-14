@@ -103,7 +103,7 @@ class Square2dEnv(GoalEnv):
 
     def get_current_observation(self):
         # obs = np.concatenate([self.get_goal_location(), self.get_ball_location(), self.get_ball_velocity()]).ravel()
-        obs = np.matlib.repmat(np.concatenate([self.get_ball_location(), self.get_ball_velocity()]).ravel())
+        obs = np.concatenate([self.get_ball_location(), self.get_ball_velocity()]).ravel()
         desired_goal = self.get_goal_location()
         achieved_goal = self.get_ball_location()
         return {

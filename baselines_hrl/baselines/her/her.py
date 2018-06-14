@@ -56,7 +56,12 @@ def make_sample_her_transitions(replay_strategy, replay_k, reward_fun, replay_sa
         if reward_type == 'reward_func':
             reward_params = {k: transitions[k] for k in ['ag_2', 'g']}
             reward_params['info'] = info
+            #print(reward_params['ag_2'].shape)
+            #rint(reward_params['g'].shape)
+            #print(reward_params['info']['is_success'].shape)
             transitions['r'] = reward_fun(**reward_params)
+
+            #input("--------------")
         else:
             # reward_params = {k: transitions[k] for k in ['ag_2', 'g']}
             # reward_params['info'] = info

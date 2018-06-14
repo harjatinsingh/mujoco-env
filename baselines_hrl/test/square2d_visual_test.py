@@ -11,7 +11,7 @@ import numpy as np
 if __name__ == '__main__':
     test_env = 'Square2dVisual-v0'
     #env = gym.make(test_env)
-    env = Square2dVisualEnv(horizon=1000)
+    env = Square2dVisualEnv(horizon=10000)
     for i in range(5):
         env.reset()
         done = False
@@ -19,10 +19,17 @@ if __name__ == '__main__':
         while not done:
             time_count += 1
             action = env.action_space.sample()
+            #env.set_goal_location([0.3,0.3])
             obs, reward, done, _ = env.step(action)
+            #print(env.get_goal_location())
+            #print(len(obs))
+            #print(reward.shape)
+            #print(done.shape)
+            #print(reward)
             img = env.render()
             #print(img.shape)
-            cv.imshow('display', img)
+            cv.imshow('display', obs['observation'])
+            #cv.imshow('display', obs['desired_goal'])
             cv.waitKey(1)
             #time.sleep(1000000)
         time.sleep(3)

@@ -210,9 +210,13 @@ class DDPG(object):
         return critic_loss, actor_loss
 
     def _init_target_net(self):
+        #file_writer = tf.summary.FileWriter('/home/frc-vision/Desktop/git/mujoco-env/baselines_hrl/log/', self.sess.graph)
+        #file_writer.add_graph(self.sess.graph)
         self.sess.run(self.init_target_net_op)
 
     def update_target_net(self):
+        #file_writer = tf.summary.FileWriter('/home/frc-vision/Desktop/git/mujoco-env/baselines_hrl/log/', self.sess.graph)
+        #file_writer.add_graph(self.sess.graph)
         self.sess.run(self.update_target_net_op)
 
     def clear_buffer(self):
@@ -341,3 +345,4 @@ class DDPG(object):
         assert (len(vars) == len(state["tf"]))
         node = [tf.assign(var, val) for var, val in zip(vars, state["tf"])]
         self.sess.run(node)
+        

@@ -6,11 +6,11 @@ import os
 import numpy as np
 from numpy.random import random
 from os import path
-
+import cv2 as cv
 
 class Square2dVisualEnv(GoalEnv):
     # TODO make this into GoalEnv
-    def __init__(self, model_path='./square2d.xml', distance_threshold=1e-1, frame_skip=2,
+    def __init__(self, model_path='./square2d.xml', distance_threshold=2200, frame_skip=2,
                  horizon=100):
 
         if model_path.startswith("/"):
@@ -46,11 +46,17 @@ class Square2dVisualEnv(GoalEnv):
 
     def reset(self):
         goal_location = self._sample_goal().copy()
+        #goal_location = np.array([0.3,0.3])
         self.get_image_of_goal_observation(goal_location)
+        self.sim.forward()
         data = self.render()
         #data = data[::-1, :, :].flatten()
         self.goal_observation = data
 
+        #print(self.get_goal_location())
+        #print(self.get_ball_location())
+        #cv.imshow('display', data)
+        #v.waitKey(1)
         self.set_ball_location([0., 0.])
         self.set_goal_location(goal_location)
         self.sim.forward()
@@ -182,7 +188,12 @@ class Square2dVisualEnv(GoalEnv):
 
     def compute_reward(self, achieved_goal, desired_goal, info):
         # Compute distance between goal and the achieved goal.
+        #print(achieved_goal.shape)
+        #print(desired_goal.shape)
         d = np.linalg.norm(achieved_goal - desired_goal, axis=-1)
+        #return d
+        #d = np.array([d])
+        #print(d.shape)
         if self.reward_type == 'sparse':
             return -(d > self.distance_threshold).astype(np.float32)
         else:

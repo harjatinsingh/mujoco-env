@@ -7,19 +7,19 @@ import pickle
 from pprint import pprint
 
 
-from envs.square2d import Square2dVisualEnv
+from envs.square2d import Square2dVisualSimpleEnv
 import time
 import numpy as np
 if __name__ == '__main__':
     test_env = 'Square2dVisual-v0'
     #env = gym.make(test_env)
-    policy_file = '/media/part/cmu_ri/deep/deep_RL/data/local/square2d-debug/square2d_debug_2018_06_15/policy_0.pkl'
+    policy_file = '/media/part/cmu_ri/deep/deep_RL/data/local/square2d-debug/square2d_debug_2018_06_17/policy_best.pkl'
     with open(policy_file, 'rb') as f:
         policy = pickle.load(f)
     #env_name = policy.info['env_name']
 
 
-    env = Square2dVisualEnv(horizon=10000)
+    env = Square2dVisualSimpleEnv(horizon=1000)
     for i in range(5):
         obs = env.reset()
         done = False
@@ -29,19 +29,21 @@ if __name__ == '__main__':
             ag = obs['achieved_goal']
             g = obs['desired_goal']
             
-            action = policy.get_actions(o,ag,g)
+            action = policy.get_actions(o.flatten(),ag,g)
             #action = env.action_space.sample()
-            #print(action)
+            print(action)
             
             time_count += 1
             #action = env.action_space.sample()
             #env.set_goal_location([0.3,0.3])
             obs, reward, done, info = env.step(action)
+            #print(done)
             #print(info['is_success'])
-            print(reward)
+            #print(reward)
             if reward == -0.0:
-                print(reward)
-                input("-----------------")
+                done = True
+                #print(reward)
+                #input("-----------------")
             
             print(reward)    
             #print(env.get_goal_location())
@@ -51,7 +53,7 @@ if __name__ == '__main__':
             #print(reward)
             img = env.render()
             #print(img.shape)
-            cv.imshow('display', img)
+            cv.imshow('display', o)
             #cv.imshow('display', obs['desired_goal'])
             cv.waitKey(100)
             #time.sleep(1000000)

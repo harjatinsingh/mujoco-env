@@ -97,6 +97,9 @@ def run_task(vv, log_dir=None, exp_name=None):
         U.single_threaded_session().__enter__()
     rank = MPI.COMM_WORLD.Get_rank()
 
+
+    log_dir='/media/part/cmu_ri/deep/deep_RL/data/local/square2d-debug/square2d_debug_2018_06_16/' #hack for now, fix later
+
     # Configure logging
     if rank == 0:
         if log_dir or logger.get_dir() is None:
@@ -108,7 +111,7 @@ def run_task(vv, log_dir=None, exp_name=None):
             logger.configure(dir=log_dir, exp_name=exp_name)
 
     logdir = logger.get_dir()
-
+    #logdir = ''# a quick hack, fix later
     assert logdir is not None
     os.makedirs(logdir, exist_ok=True)
 

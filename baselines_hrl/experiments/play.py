@@ -2,10 +2,10 @@ import click
 import numpy as np
 import pickle
 
+from baselines.her.rollout import RolloutWorker
 from baselines import logger
 from baselines.common import set_global_seeds
 import experiments.config as config
-from baselines.her.rollout import RolloutWorker
 import envs
 
 @click.command()
@@ -30,7 +30,7 @@ def main(policy_file, seed, n_test_rollouts, render):
     config.log_params(params, logger=logger)
 
     dims = config.configure_shapes(params)
-
+    #render = True
     eval_params = {
         'exploit': True,
         'use_target_net': params['test_with_polyak'],

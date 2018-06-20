@@ -6,7 +6,7 @@ from experiments.train import run_task
 if __name__ == '__main__':
 
     TestVisual = False
-    Debug = True
+    Debug = False
     # Test FakeGoals
     if not TestVisual:
         # exp_prefix = 'FakeGoals_unique_zero'
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     if Debug:
         vg.add('seed', [0])
     else:
-        vg.add('seed', [0, 200])
+        vg.add('seed', [100, 400])
     print('Number of configurations: ', len(vg.variants()))
     sub_process_popens = []
     for vv in vg.variants():

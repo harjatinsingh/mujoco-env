@@ -90,6 +90,8 @@ class RolloutWorker:
                 noise_eps=self.noise_eps if not self.exploit else 0.,
                 random_eps=self.random_eps if not self.exploit else 0.,
                 use_target_net=self.use_target_net)
+            print(policy_output)
+            #input("--------------------")
             if self.compute_Q:
                 u, Q = policy_output
                 Qs.append(Q)
@@ -111,6 +113,7 @@ class RolloutWorker:
                     curr_o_new, _, _, info = self.envs[i].step(u[i])
                     if 'is_success' in info:
                         success[i] = info['is_success']
+                        #print(success[i])
                     o_new[i] = curr_o_new['observation'].flatten()
                     ag_new[i] = curr_o_new['achieved_goal'].flatten()
                     for idx, key in enumerate(self.info_keys):
@@ -118,6 +121,7 @@ class RolloutWorker:
                     if self.render:
                         self.envs[i].render()
                 except MujocoException as e:
+                    print(e)
                     return self.generate_rollouts()
 
             if np.isnan(o_new).any():
@@ -151,6 +155,8 @@ class RolloutWorker:
         if self.compute_Q:
             self.Q_history.append(np.mean(Qs))
         self.n_episodes += self.rollout_batch_size
+
+        #print(self.success_history)
 
         return convert_episode_to_batch_major(episode)
 

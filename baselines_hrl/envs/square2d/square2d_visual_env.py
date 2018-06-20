@@ -10,7 +10,7 @@ import cv2 as cv
 
 class Square2dVisualEnv(GoalEnv):
     # TODO make this into GoalEnv
-    def __init__(self, model_path='./square2d.xml', distance_threshold=2200, frame_skip=2,
+    def __init__(self, model_path='./square2d.xml', distance_threshold=1e-1, frame_skip=1,
                  horizon=100):
 
         if model_path.startswith("/"):
@@ -46,7 +46,7 @@ class Square2dVisualEnv(GoalEnv):
 
     def reset(self):
         goal_location = self._sample_goal().copy()
-        #goal_location = np.array([0.3,0.3])
+        #goal_location = np.array([-0.3,-0.3])
         self.get_image_of_goal_observation(goal_location)
         self.sim.forward()
         data = self.render()
@@ -56,7 +56,9 @@ class Square2dVisualEnv(GoalEnv):
         #print(self.get_goal_location())
         #print(self.get_ball_location())
         #cv.imshow('display', data)
-        #v.waitKey(1)
+        #print(self.compute_reward(data.flatten(),data.flatten(),{}))
+        #cv.waitKey(0)
+
         self.set_ball_location([0., 0.])
         self.set_goal_location(goal_location)
         self.sim.forward()
@@ -123,10 +125,19 @@ class Square2dVisualEnv(GoalEnv):
         #obs = np.concatenate([data, self.get_ball_velocity()]).ravel()
         #bs = data.flatten()
         #desired_goal = self.goal_observation.flatten()
+        #cv.imshow('display', data)
+        #print(self.compute_reward(data.flatten(),data.flatten(),{}))
+        #cv.waitKey(1000)
+        #cv.imshow('goal', self.goal_observation)
+        #print(self.compute_reward(data.flatten(),data.flatten(),{}))
+        #cv.waitKey(1000)
+
         #achieved_goal = data.flatten()
-        obs = data
-        desired_goal = self.goal_observation
-        achieved_goal = data
+        obs = data.flatten()
+        #desired_goal = self.goal_observation.flatten()
+        #achieved_goal = data.flatten()
+        desired_goal = self.get_goal_location()
+        achieved_goal = self.get_ball_location()
         #print(achieved_goal.shape)
         #print(desired_goal.shape)
         #print(obs.shape)
@@ -161,19 +172,21 @@ class Square2dVisualEnv(GoalEnv):
 
     def step(self, ctrl):
         ctrl = np.clip(ctrl, -1., 1.)
+        #print(ctrl)
         self.do_simulation(ctrl, self.frame_skip)
         obs = self.get_current_observation()
         info = {
-            'is_success': self._is_success(obs['achieved_goal'], self.goal_observation),
+            'is_success': self._is_success(obs['achieved_goal'],  obs['desired_goal']),
         }
         reward = self.compute_reward(obs['achieved_goal'], obs['desired_goal'], {})
-        done = (reward == 1.0)
+        done = (reward == -0.0)
         self.time_step += 1
         if self.time_step >= self.horizon:
             done = True
         return obs, reward, done, info
 
     def take_step(self):
+        #self.sim.forward()
         self.sim.step()
 
     def render(self, mode='human'):
@@ -205,8 +218,8 @@ class Square2dVisualEnv(GoalEnv):
         #rint(desired_goal.shape)
         #input("-------------------------")
 
-        d = np.linalg.norm(achieved_goal.flatten() - desired_goal.flatten(), axis=-1)
+        d = np.linalg.norm(achieved_goal - desired_goal, axis=-1)
         return (d < self.distance_threshold).astype(np.float32)
 
     def _sample_goal(self):
-        return random((2,)) - 0.5
+        return (random((2,)) - 0.5)/3

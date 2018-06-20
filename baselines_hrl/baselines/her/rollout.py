@@ -90,7 +90,7 @@ class RolloutWorker:
                 noise_eps=self.noise_eps if not self.exploit else 0.,
                 random_eps=self.random_eps if not self.exploit else 0.,
                 use_target_net=self.use_target_net)
-            print(policy_output)
+            #print(policy_output)
             #input("--------------------")
             if self.compute_Q:
                 u, Q = policy_output

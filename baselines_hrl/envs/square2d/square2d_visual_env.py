@@ -133,9 +133,9 @@ class Square2dVisualEnv(GoalEnv):
         #cv.waitKey(1000)
 
         #achieved_goal = data.flatten()
-        obs = data.flatten()
-        #desired_goal = self.goal_observation.flatten()
-        #achieved_goal = data.flatten()
+        obs = data
+        #desired_goal = self.goal_observation
+        #achieved_goal = data
         desired_goal = self.get_goal_location()
         achieved_goal = self.get_ball_location()
         #print(achieved_goal.shape)

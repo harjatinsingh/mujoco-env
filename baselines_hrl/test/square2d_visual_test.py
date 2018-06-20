@@ -5,13 +5,13 @@ import cv2 as cv
 import scipy.misc
 from pprint import pprint
 
-from envs.square2d import Square2dVisualEnv
+from envs.square2d import Square2dVisualSimpleEnv
 import time
 import numpy as np
 if __name__ == '__main__':
-    test_env = 'Square2dVisual-v0'
+    test_env = 'Square2dVisualSimple-v0'
     #env = gym.make(test_env)
-    env = Square2dVisualEnv(horizon=10000)
+    env = Square2dVisualSimpleEnv(horizon=10000)
     for i in range(5):
         env.reset()
         done = False

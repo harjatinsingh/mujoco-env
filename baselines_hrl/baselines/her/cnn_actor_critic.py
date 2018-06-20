@@ -59,9 +59,14 @@ class CNNActorCritic:
         # input_pi = tf.concat(axis=1, values=[o, g])  # for actor
 
         # Networks.
-
+        
+        
         x_o = cnn_one_stream(o, scope='phi', reuse=False)
-        x_g = cnn_one_stream(g, scope='phi', reuse=True)
+        #print(x_o.shape)
+        #input("----------------")
+        #x_g = cnn_one_stream(g, scope='phi', reuse=True)
+        x_g = g
+        
 
         x_concat = tf.concat(axis=1, values=[x_o, x_g])
 

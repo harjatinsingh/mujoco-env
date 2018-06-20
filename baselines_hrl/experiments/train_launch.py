@@ -13,13 +13,13 @@ if __name__ == '__main__':
         exp_prefix = 'square2d'
         vg = VariantGenerator()
         # vg.add('env_name', ['FetchPush-v0', 'FetchReach-v0'])
-        vg.add('env_name', ['Square2dVisual-v0'])
+        vg.add('env_name', ['Square2dVisualSimple-v0'])
         # vg.add('env_name', ['FetchReach-v0', 'FetchSlide-v0', 'FetchPush-v0'])
-        vg.add('network', ['fc'])
-        vg.add('n_epochs', [50])
+        vg.add('network', ['cnn_fc'])
+        vg.add('n_epochs', [200])
 
         # vg.add('replay_strategy', ['future', 'only_fake'])
-        vg.add('replay_strategy', ['future'])
+        vg.add('replay_strategy', ['future', 'only_fake'])
         vg.add('replay_sample_strategy', ['random'])  # TODO implementing 'prioritized', add to visual
         vg.add('reward_type',
                lambda replay_strategy: ['reward_func'] if replay_strategy == 'future' else ['reward_func',
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     if Debug:
         vg.add('seed', [0])
     else:
-        vg.add('seed', [100, 400])
+        vg.add('seed', [100, 300, 400])
     print('Number of configurations: ', len(vg.variants()))
     sub_process_popens = []
     for vv in vg.variants():

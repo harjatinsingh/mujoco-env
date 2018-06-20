@@ -7,7 +7,7 @@ from envs.square2d import Square2dEnv
 import time
 import numpy as np
 if __name__ == '__main__':
-    test_env = 'Square2d-v0'
+    test_env = 'Square2dSimple-v0'
     # env = gym.make(test_env)
     env = Square2dEnv(horizon=1000)
     for i in range(5):

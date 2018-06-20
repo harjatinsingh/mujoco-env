@@ -98,7 +98,7 @@ def run_task(vv, log_dir=None, exp_name=None):
     rank = MPI.COMM_WORLD.Get_rank()
 
 
-    log_dir='/media/part/cmu_ri/deep/deep_RL/data/local/square2d-debug/square2d_debug_2018_06_16/' #hack for now, fix later
+    log_dir='/media/part/cmu_ri/deep/deep_RL/data/local/square2d-debug/square2d_debug_2018_06_17/' #hack for now, fix later
 
     # Configure logging
     if rank == 0:

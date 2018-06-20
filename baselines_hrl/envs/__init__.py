@@ -14,6 +14,19 @@ register(
     max_episode_steps=1000
 )
 
+
+register(
+     id='Square2dSimple-v0',
+     entry_point='envs.square2d:Square2dSimpleEnv',
+     max_episode_steps=1000
+ )
+
+
+register(
+     id='Square2dVisualSimple-v0',
+     entry_point='envs.square2d:Square2dVisualSimpleEnv',
+     max_episode_steps=1000
+ )
 # Reference: Visual Gym registration
 # ---------------------------
 
